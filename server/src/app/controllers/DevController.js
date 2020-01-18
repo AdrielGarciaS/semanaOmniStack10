@@ -11,7 +11,7 @@ export default {
   async store(req, res) {
     const { github_username, techs, latitude, longitude } = req.body;
 
-    const existDev = Dev.findOne({ github_username });
+    const existDev = await Dev.findOne({ github_username });
 
     if (existDev) {
       return res.json(existDev);
