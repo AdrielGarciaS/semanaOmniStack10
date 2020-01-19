@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Dev from '../models/Dev';
-
 import formatTechs from '../../util/formatTechs';
+import { findConnections, sendMessage } from '../../websocket';
 
 export default {
   async index(req, res) {
@@ -37,6 +37,13 @@ export default {
       techs: techsArray,
       location,
     });
+
+    const sendSocketMessageTo = findConnections(
+      { latitude, longitude },
+      techsArray
+    );
+
+    sendMessage(sendSocketMessageTo, 'new-dev', dev);
 
     return res.json(dev);
   },

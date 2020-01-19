@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { DiGithubBadge } from 'react-icons/di';
 import api from '../../services/api';
 
 import { Container, Dev, ContainerDevInfo } from './styles';
 
-export default function DevList() {
-  const [devs, setDevs] = useState([]);
-
+export default function DevList({ devs, setDevs }) {
   useEffect(() => {
     async function loadDevs() {
       const response = await api.get('devs');
@@ -20,7 +18,7 @@ export default function DevList() {
     }
 
     loadDevs();
-  }, []);
+  }, [setDevs]);
 
   return (
     <Container>

@@ -15,7 +15,7 @@ import {
   SubmitButton,
 } from './styles';
 
-export default function FormDev() {
+export default function FormDev({ onSubmit }) {
   const techsInputRef = createRef();
 
   const [latitude, setLatitude] = useState('');
@@ -40,28 +40,21 @@ export default function FormDev() {
     );
   }, []);
 
-  async function handleAddDev(e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    console.log(techsInputRef);
 
-    const techs = techsInputRef.current.props.value
-      .map(t => t.value)
-      .join(', ');
-
-    console.log(techs);
-
-    const response = await api.post('/devs', {
+    onSubmit({
       github_username,
-      techs,
       latitude,
       longitude,
+      techs: techsInputRef.current.props.value.map(t => t.value).join(', '),
     });
   }
 
   return (
     <Container>
       <Strong>Cadastrar</Strong>
-      <Form onSubmit={handleAddDev}>
+      <Form onSubmit={handleSubmit}>
         <ContainerInput>
           <Label htmlFor="github_username">Usuário Github</Label>
           <ContainerIconInput>

@@ -7,6 +7,7 @@ import {
   getCurrentPositionAsync,
 } from 'expo-location';
 import api from '~/services/api';
+import { connect, disconnect, subscribeToNewDevs } from '~/services/socket';
 
 import {
   Map,
@@ -38,6 +39,14 @@ export default function Main({ navigation }) {
     // setKeyboardHeight(0);
   }
 
+  function setWebSocket() {
+    disconnect();
+
+    const { latitude, longitude } = currentRegion;
+
+    connect(latitude, longitude, techs);
+  }
+
   async function searchDevs() {
     if (!techs) {
       Keyboard.dismiss();
@@ -53,10 +62,19 @@ export default function Main({ navigation }) {
       },
     });
 
-    setDevs(response.data);
+    setDevs(
+      response.data.map(dev => ({
+        ...dev,
+        techs: dev.techs.join(', '),
+      }))
+    );
     setTechs('');
     Keyboard.dismiss();
   }
+
+  useEffect(() => {
+    subscribeToNewDevs(dev => setDevs([...devs, dev]));
+  }, [devs]);
 
   useEffect(() => {
     function createEventListenerKeyboard() {
