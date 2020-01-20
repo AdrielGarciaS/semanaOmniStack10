@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Keyboard } from 'react-native';
-import { Callout } from 'react-native-maps';
+import { Marker, Callout } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
   requestPermissionsAsync,
@@ -12,6 +12,7 @@ import { connect, disconnect, subscribeToNewDevs } from '~/services/socket';
 import {
   Map,
   Mark,
+  ContainerAvatar,
   Avatar,
   DevInfoWrapper,
   DevName,
@@ -123,18 +124,20 @@ export default function Main({ navigation }) {
         onRegionChangeComplete={handleRegionChange}
       >
         {devs.map(dev => (
-          <Mark
+          <Marker
             key={dev._id}
             coordinate={{
               longitude: dev.location.coordinates[0],
               latitude: dev.location.coordinates[1],
             }}
           >
-            <Avatar
-              source={{
-                uri: dev.avatar_url,
-              }}
-            />
+            <ContainerAvatar>
+              <Avatar
+                source={{
+                  uri: dev.avatar_url,
+                }}
+              />
+            </ContainerAvatar>
 
             <Callout
               onPress={() => {
@@ -149,7 +152,7 @@ export default function Main({ navigation }) {
                 <DevTechs>{dev.techs}</DevTechs>
               </DevInfoWrapper>
             </Callout>
-          </Mark>
+          </Marker>
         ))}
       </Map>
       <SearchDevsForm keyboard={keyboardState} keyboardHeight={keyboardHeight}>
@@ -171,7 +174,7 @@ export default function Main({ navigation }) {
           }}
         />
         <SubmitButton onPress={searchDevs}>
-          <MaterialIcons name="send" size={20} color="#fff" />
+          <MaterialIcons name="search" size={20} color="#fff" />
         </SubmitButton>
       </SearchDevsForm>
     </>

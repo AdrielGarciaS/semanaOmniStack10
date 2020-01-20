@@ -1,18 +1,20 @@
 import styled from 'styled-components/native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView from 'react-native-maps';
 
 export const Map = styled(MapView)`
   flex: 1;
 `;
 
-export const Mark = styled(Marker)``;
+export const ContainerAvatar = styled.View`
+  border: 4px;
+  border-color: #fff;
+  border-radius: 4px;
+`;
 
 export const Avatar = styled.Image`
   height: 54px;
   width: 54px;
   border-radius: 4px;
-  border: 4px;
-  border-color: #fff;
 `;
 
 export const DevInfoWrapper = styled.View`
