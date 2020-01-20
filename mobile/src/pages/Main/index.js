@@ -11,7 +11,6 @@ import { connect, disconnect, subscribeToNewDevs } from '~/services/socket';
 
 import {
   Map,
-  Mark,
   ContainerAvatar,
   Avatar,
   DevInfoWrapper,
@@ -71,6 +70,7 @@ export default function Main({ navigation }) {
     );
     setTechs('');
     Keyboard.dismiss();
+    setWebSocket();
   }
 
   useEffect(() => {
@@ -163,6 +163,7 @@ export default function Main({ navigation }) {
           autoCorrect={false}
           value={techs}
           onChangeText={setTechs}
+          onSubmitEditing={searchDevs}
           style={{
             shadowColor: '#000',
             shadowOpacity: 0.2,

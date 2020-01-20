@@ -1,6 +1,5 @@
 import React, { useState, useEffect, createRef } from 'react';
 import { DiGithubBadge } from 'react-icons/di';
-import api from '../../services/api';
 import InputCreatable from '../InputCreatable';
 
 import {
